@@ -136,7 +136,7 @@
                     if (is_array(checkHtmlElements($str))) {
                         foreach (checkHtmlElements($str) as $val) {
                             echo
-                            '<div class="row mt-5 result">
+                                '<div class="row mt-5 result">
                                     <div class="col-auto my-auto">
                                         <h2 class="alert-danger"> ' . $val . '</h2>
                                     </div>
@@ -152,7 +152,7 @@
                     }
                 } else {
                     echo
-                    '<div class="row mt-5 result">
+                        '<div class="row mt-5 result">
                             <div class="col-auto my-auto">
                                 <h2 class="alert-danger">Please fill the required fields</h2>
                             </div>
@@ -210,12 +210,16 @@
 
         function checkHtmlElements($str)
         {
+            if(!preg_match('/<.*?>/', $str)){
+                return ' Please Insert at least one html element';
+            }
             preg_match_all(
                 "|<.*?>|",
                 "$str",
                 $out,
             );
-
+          
+            $tags = array();
             foreach ($out as $v) {
                 foreach ($v as $k) {
                     $tags[] =  str_replace(['<', '>'], '', $k);
